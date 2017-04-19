@@ -31,24 +31,29 @@ public class NumberWithDimension {
     }
 
     public NumberWithDimension multiplication(NumberWithDimension toMultiplicateNumber) {
+        this.dimension = Dimension.Normalise(this.dimension + "*" + toMultiplicateNumber.dimension)[1];
+        this.number = this.number * toMultiplicateNumber.number;
         return this;
-    }
+        }
 
 
-    public NumberWithDimension division(NumberWithDimension toDivisonNumber) {
-        return this;
-    }
-
-    public int compare(NumberWithDimension toComapreNumber) {
-        return Double.compare(this.number, toComapreNumber.number);
-    }
-
-
-
-
-
-    @Override
-    public String toString() {
-        return this.number + " " + this.dimension;
-    }
+public NumberWithDimension division(NumberWithDimension toDivisonNumber) {
+    this.dimension = Dimension.Normalise(this.dimension + "*" + toDivisonNumber.dimension)[1];
+    this.number = this.number / toDivisonNumber.number;
+    return this;
 }
+
+
+public int compare(NumberWithDimension toComapreNumber) {
+        return Double.compare(this.number, toComapreNumber.number);
+        }
+
+
+
+
+
+@Override
+public String toString() {
+        return this.number + " " + this.dimension;
+        }
+        }
