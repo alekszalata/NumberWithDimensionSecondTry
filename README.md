@@ -1,2 +1,1 @@
 # NumberWithDimensionSecondTry
-Остались тесты
