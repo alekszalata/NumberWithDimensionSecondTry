@@ -3,9 +3,9 @@ package Pack;
 
 
 public class Main {
-    public static void main(String[] args) {
-        NumberWithDimension numberWithDimension = new NumberWithDimension("3 1 / asd");
-        NumberWithDimension numberWithDimension1 = new NumberWithDimension("2 1 / lel");
+    public static void main(String[] args) throws DimensionException {
+        NumberWithDimension numberWithDimension = new NumberWithDimension("1 1 / джоуль");
+        NumberWithDimension numberWithDimension1 = new NumberWithDimension("0 стол / стул");
         System.out.println(numberWithDimension.division(numberWithDimension1));
     }
 }
