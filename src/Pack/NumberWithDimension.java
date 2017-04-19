@@ -31,14 +31,14 @@ public class NumberWithDimension {
     }
 
     public NumberWithDimension multiplication(NumberWithDimension toMultiplicateNumber) {
-        this.dimension = Dimension.Normalise(this.dimension + "*" + toMultiplicateNumber.dimension)[1].replace("1 * ","");
+        this.dimension = Dimension.Normalise(this.dimension + "*" + toMultiplicateNumber.dimension)[1];
         this.number = this.number * toMultiplicateNumber.number;
         return this;
         }
 
 
 public NumberWithDimension division(NumberWithDimension toDivisonNumber) {
-    this.dimension = Dimension.Normalise(this.dimension + "*" + toDivisonNumber.dimension)[1].replace("1 * ","");
+    this.dimension = Dimension.Normalise(this.dimension + "*" + toDivisonNumber.dimension)[1];
     this.number = this.number / toDivisonNumber.number;
     return this;
 }
