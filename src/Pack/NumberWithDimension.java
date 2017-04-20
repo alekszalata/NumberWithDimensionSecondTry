@@ -10,7 +10,7 @@ public class NumberWithDimension {
     public NumberWithDimension(String number) {
         this.number = Double.parseDouble(number.substring(0, number.indexOf(' '))) * Math.pow(10, Integer.parseInt(Dimension.Normalise(number.substring(number.indexOf(' ') + 1, number.length()))[0]));
         this.dimension = Dimension.Normalise(number.substring(number.indexOf(' ') + 1, number.length()))[1];
-        if (this.dimension.charAt(0) == '1') this.dimension = this.dimension.substring(4,this.dimension.length()); // удаление 1
+        if (this.dimension.charAt(0) == '1') this.dimension = this.dimension.substring(4,this.dimension.length());
     }
 
     public NumberWithDimension summary(NumberWithDimension toSumNumber) throws DimensionException {
