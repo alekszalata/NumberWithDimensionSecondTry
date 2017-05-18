@@ -98,6 +98,7 @@ public class Dimension {
         }
         out = out.substring(0, out.length() - 2);
         String[] str = {String.valueOf(mainPow), out};
+        mainPow = 0;
         measure.clear();
         Map.clear();
         return str;
