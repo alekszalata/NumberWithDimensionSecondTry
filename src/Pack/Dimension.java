@@ -6,9 +6,12 @@ import java.util.*;
 
 
 public class Dimension {
+    private String dimension;
     private static final Map<Integer, String> pow = new HashMap<>();
     private static Map<String, Integer> measure = new HashMap<>();
-    private static final List<String> operations = new ArrayList<>();
+    private static int mainPow;
+    String out;
+
 
     static {
         pow.put(-18, "атто");
@@ -27,101 +30,65 @@ public class Dimension {
         pow.put(12, "тера");
         pow.put(15, "пета");
         pow.put(18, "экса");
-
-        operations.add("\\*");
-        operations.add("\\/");
-        operations.add("\\^");
     }
 
-    public static String[] Normalise(String dimension) {
-        int mainPow = 0;
-        dimension = dimension.replace(" ", "");
-        String upperPart = dimension.split(operations.get(1))[0];
-        List<String> splittedUpperPart = Arrays.asList(upperPart.split(operations.get(0)));
+
+    public static Map<String, Integer> partsHandler(List<String> splittedUpperPart, int key) {
         for (String str : splittedUpperPart) {
             List<String> splittedSplittedUpperPart = new ArrayList<>();
             boolean isSplitted = false;
             for (int i : pow.keySet()) {
-                splittedSplittedUpperPart = Arrays.asList(str.split(pow.get(i)));
+                splittedSplittedUpperPart = Arrays.asList(str.split(pow.get(i),2));
                 if (splittedSplittedUpperPart.size() > 1) {
-                    List<String> splittedSplittedSplittedUpperPart = Arrays.asList(splittedSplittedUpperPart.get(1).split(operations.get(2)));
+                    List<String> splittedSplittedSplittedUpperPart = Arrays.asList(splittedSplittedUpperPart.get(1).split("\\^"));
                     int pow = 1;
                     if (splittedSplittedSplittedUpperPart.size() > 1) {
                         pow = Integer.parseInt(splittedSplittedSplittedUpperPart.get(1));
                     }
-                    mainPow = mainPow + i * pow;
+                    mainPow = mainPow + key * i * pow;
                     if (!measure.keySet().contains(splittedSplittedSplittedUpperPart.get(0))) {
-                        measure.put(splittedSplittedSplittedUpperPart.get(0), pow);
+                        measure.put(splittedSplittedSplittedUpperPart.get(0), key * pow);
                     } else {
-                        measure.replace(splittedSplittedSplittedUpperPart.get(0), measure.get(splittedSplittedSplittedUpperPart.get(0)) + pow);
+                        measure.replace(splittedSplittedSplittedUpperPart.get(0), measure.get(splittedSplittedSplittedUpperPart.get(0)) + key * pow);
                     }
                     isSplitted = true;
                     break;
                 }
             }
             if (!isSplitted) {
-                List<String> splittedSplittedSplittedUpperPart = Arrays.asList(str.split(operations.get(2)));
+                List<String> splittedSplittedSplittedUpperPart = Arrays.asList(str.split("\\^"));
                 int pow = 1;
                 if (splittedSplittedSplittedUpperPart.size() > 1) {
                     pow = Integer.parseInt(splittedSplittedSplittedUpperPart.get(1));
                 }
                 if (!measure.keySet().contains(splittedSplittedSplittedUpperPart.get(0))) {
-                    measure.put(splittedSplittedSplittedUpperPart.get(0), pow);
+                    measure.put(splittedSplittedSplittedUpperPart.get(0), key * pow);
                 } else {
-                    measure.replace(splittedSplittedSplittedUpperPart.get(0), measure.get(splittedSplittedSplittedUpperPart.get(0)) + pow);
+                    measure.replace(splittedSplittedSplittedUpperPart.get(0), measure.get(splittedSplittedSplittedUpperPart.get(0)) + key * pow);
                 }
             }
         }
-        if (dimension.split(operations.get(1)).length > 1) {
-            String lowerPart = dimension.split(operations.get(1))[1];
-            List<String> splittedLowerPart = Arrays.asList(lowerPart.split(operations.get(0)));
-            for (String str : splittedLowerPart) {
-                List<String> splittedSplittedLowerPart = new ArrayList<>();
-                boolean isSplitted = false;
-                for (int i : pow.keySet()) {
-                    splittedSplittedLowerPart = Arrays.asList(str.split(pow.get(i)));
-                    if (splittedSplittedLowerPart.size() > 1) {
-                        List<String> splittedSplittedSplittedLowerPart = Arrays.asList(splittedSplittedLowerPart.get(1).split(operations.get(2)));
-                        int pow = 1;
-                        if (splittedSplittedSplittedLowerPart.size() > 1) {
-                            pow = Integer.parseInt(splittedSplittedSplittedLowerPart.get(1));
-                        }
-                        mainPow = mainPow - i * pow;
-                        if (!measure.keySet().contains(splittedSplittedSplittedLowerPart.get(0))) {
-                            measure.put(splittedSplittedSplittedLowerPart.get(0), -pow);
-                        } else {
-                            measure.replace(splittedSplittedSplittedLowerPart.get(0), measure.get(splittedSplittedSplittedLowerPart.get(0)) - pow);
-                        }
-                        isSplitted = true;
-                        break;
-                    }
-                }
-                if (!isSplitted) {
-                    List<String> splittedSplittedSplittedLowerPart = Arrays.asList(str.split(operations.get(2)));
-                    int pow = 1;
-                    if (splittedSplittedSplittedLowerPart.size() > 1) {
-                        pow = Integer.parseInt(splittedSplittedSplittedLowerPart.get(1));
-                    }
-                    if (!measure.keySet().contains(splittedSplittedSplittedLowerPart.get(0))) {
-                        measure.put(splittedSplittedSplittedLowerPart.get(0), -pow);
-                    } else {
-                        measure.replace(splittedSplittedSplittedLowerPart.get(0), measure.get(splittedSplittedSplittedLowerPart.get(0)) - pow);
-                    }
-                }
-            }
+        return measure;
+    }
+
+    public static String[] Normalise(String dimension) {
+        dimension = dimension.replace(" ", "");
+        String upperPart = dimension.split("/")[0];
+        List<String> splittedUpperPart = Arrays.asList(upperPart.split("\\*"));
+        measure = partsHandler(splittedUpperPart, 1);
+
+        if (dimension.split("/").length > 1) {
+            String lowerPart = dimension.split("/")[1];
+            List<String> splittedLowerPart = Arrays.asList(lowerPart.split("\\*"));
+        measure = partsHandler(splittedLowerPart, -1);
         }
         List<String> strings = new ArrayList<>();
         strings.addAll(measure.keySet());
-        strings.sort(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.compareTo(o2);
-            }
-        });
         Map<String, Integer> Map = new HashMap<>();
         for (String str : strings) {
             Map.put(str, measure.get(str));
         }
+
         String out = "";
         for (String m : Map.keySet()) {
             if (Map.get(m) != 0 && Map.get(m) != 1)
@@ -135,4 +102,8 @@ public class Dimension {
         Map.clear();
         return str;
     }
-}
+
+    }
+
+
+

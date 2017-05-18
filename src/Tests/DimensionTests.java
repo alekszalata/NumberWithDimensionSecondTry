@@ -50,7 +50,7 @@ public class DimensionTests {
     @Test
     public void Compare() {
         assertEquals(1, new NumberWithDimension("1 стол / стул")
-                .compare(new NumberWithDimension("0 стол / стул")));
+                .compareTo(new NumberWithDimension("0 стол / стул")));
     }
 }
 
